@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/libraries/IOIOLib/IOIOLib.iml" filepath="$PROJECT_DIR$/libraries/IOIOLib/IOIOLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/IOIOLibAccessory/IOIOLibAccessory.iml" filepath="$PROJECT_DIR$/libraries/IOIOLibAccessory/IOIOLibAccessory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/IOIOLibBT/IOIOLibBT.iml" filepath="$PROJECT_DIR$/libraries/IOIOLibBT/IOIOLibBT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IOIOTree.iml" filepath="$PROJECT_DIR$/IOIOTree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+    </modules>
+  </component>
+</project>
+
