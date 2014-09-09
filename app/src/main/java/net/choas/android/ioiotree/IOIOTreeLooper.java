@@ -18,6 +18,7 @@ public class IOIOTreeLooper implements IOIOLooper {
 
     DigitalOutput leds[] = new DigitalOutput[7];
     private boolean v = false;
+    private boolean isRunning = false;
 
     @Override
     public void setup(IOIO ioio) throws ConnectionLostException, InterruptedException {
@@ -34,8 +35,11 @@ public class IOIOTreeLooper implements IOIOLooper {
 
     @Override
     public void loop() throws ConnectionLostException, InterruptedException {
-//        Log.d(TAG, "loop");
+//        Log.v(TAG, "loop " + isRunning);
 
+        if (!this.isRunning) {
+            return;
+        }
         for (DigitalOutput led : leds) {
             led.write(v);
         }
@@ -50,5 +54,11 @@ public class IOIOTreeLooper implements IOIOLooper {
     @Override
     public void incompatible() {
         Log.d(TAG, "incompatible");
+    }
+
+    public void setRun(boolean b) {
+
+        Log.d(TAG, "running? " + (b?"yes":"no"));
+        this.isRunning = b;
     }
 }
