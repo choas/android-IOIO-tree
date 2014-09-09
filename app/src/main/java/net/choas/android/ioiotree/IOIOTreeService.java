@@ -5,6 +5,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.util.List;
+
 import ioio.lib.util.IOIOLooper;
 import ioio.lib.util.android.IOIOService;
 
@@ -28,8 +30,8 @@ public class IOIOTreeService extends IOIOService {
         return mBinder;
     }
 
-    public void setRun(boolean b) {
-        looper.setRun(b);
+    public void setRecording(List<IOIOTreeActivity.Recording> b) {
+        looper.setRecording(b);
     }
 
 

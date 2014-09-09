@@ -15,6 +15,10 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 
 public class IOIOTreeActivity extends Activity {
 
@@ -46,6 +50,9 @@ public class IOIOTreeActivity extends Activity {
     private ToggleButton toggleButtons[] = new ToggleButton[7];
     private boolean mIsBound = false;
 
+
+    private List<Recording> recording = new ArrayList<Recording>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,15 +74,38 @@ public class IOIOTreeActivity extends Activity {
 //                Log.d(TAG, "isChecked=" + isChecked);
                 for (ToggleButton toggleButton : toggleButtons) {
                     toggleButton.setEnabled(isChecked);
+                    toggleButton.setChecked(false);
                 }
 
                 if (mBoundService == null) {
                     Log.i(TAG, "service not connected");
                     return;
                 }
-                mBoundService.setRun(!isChecked);
+
+                if(isChecked) {
+                    Log.d(TAG, "clean recording");
+                    recording.clear();
+//                   recording = null; //new ArrayList<Recording>();
+                }
+
+                mBoundService.setRecording(recording);
             }
         });
+
+
+        int buttonNumber = 0;
+for (ToggleButton toggleButton : toggleButtons) {
+    final int finalButtonNumber = buttonNumber;
+    toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        int buttonNumber = finalButtonNumber;
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            Log.d(TAG, "button number " + buttonNumber + " is " + isChecked);
+            recording.add(new Recording(this.buttonNumber, isChecked));
+        }
+    });
+
+    buttonNumber++;
+}
 
         startService(new Intent(this, IOIOTreeService.class));
     }
@@ -112,7 +142,6 @@ public class IOIOTreeActivity extends Activity {
     }
 
 
-
     private void doBindService() {
         // Establish a connection with the service.  We use an explicit
         // class name because we want a specific service implementation that
@@ -131,4 +160,28 @@ public class IOIOTreeActivity extends Activity {
         }
     }
 
+    public class Recording {
+
+        private int buttonNumber;
+        private boolean state;
+        private long time;
+
+        private Recording(int buttonNumber, boolean state) {
+            this.buttonNumber = buttonNumber;
+            this.state = state;
+            this.time = new Date().getTime();
+        }
+
+        public int getButtonNumber() {
+            return buttonNumber;
+        }
+
+        public boolean isState() {
+            return state;
+        }
+
+        public long getTime() {
+            return time;
+        }
+    }
 }
