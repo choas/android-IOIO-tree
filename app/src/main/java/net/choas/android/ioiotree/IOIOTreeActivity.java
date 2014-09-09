@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MyActivity extends Activity {
+public class IOIOTreeActivity extends Activity {
 
     private static final String TAG = "IOIOTree";
 
