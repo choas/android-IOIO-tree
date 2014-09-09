@@ -15,13 +15,6 @@ public class IOIOTreeActivity extends Activity {
     private static final String TAG = "IOIOTree";
 
     private IOIOTreeService mBoundService;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
-    }
-
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
@@ -29,7 +22,7 @@ public class IOIOTreeActivity extends Activity {
             // interact with the service.  Because we have bound to a explicit
             // service that we know is running in our own process, we can
             // cast its IBinder to a concrete class and directly access it.
-            mBoundService = ((IOIOTreeService.LocalBinder)service).getService();
+            mBoundService = ((IOIOTreeService.LocalBinder) service).getService();
 
             Log.i(TAG, "local service connected");
         }
@@ -44,7 +37,11 @@ public class IOIOTreeActivity extends Activity {
         }
     };
 
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
