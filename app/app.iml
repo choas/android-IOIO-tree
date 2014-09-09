@@ -79,6 +79,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 20 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="IOIOLibAccessory" exported="" />
+    <orderEntry type="module" module-name="IOIOLib" exported="" />
+    <orderEntry type="module" module-name="IOIOLibBT" exported="" />
   </component>
 </module>
 
