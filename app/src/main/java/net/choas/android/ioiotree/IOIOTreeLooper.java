@@ -30,12 +30,11 @@ public class IOIOTreeLooper implements IOIOLooper {
         leds[4] = ioio.openDigitalOutput(5);
         leds[5] = ioio.openDigitalOutput(4);
         leds[6] = ioio.openDigitalOutput(3);
-
     }
 
     @Override
     public void loop() throws ConnectionLostException, InterruptedException {
-        Log.d(TAG, "loop");
+//        Log.d(TAG, "loop");
 
         for (DigitalOutput led : leds) {
             led.write(v);

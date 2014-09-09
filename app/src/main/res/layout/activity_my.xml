@@ -65,4 +65,13 @@
         android:id="@+id/toggleButton7"
         android:layout_below="@+id/toggleButton6"
         android:layout_toEndOf="@+id/toggleButton6" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="record"
+        android:id="@+id/record"
+        android:checked="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

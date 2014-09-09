@@ -10,6 +10,9 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.ToggleButton;
 
 
 public class IOIOTreeActivity extends Activity {
@@ -17,12 +20,54 @@ public class IOIOTreeActivity extends Activity {
     private static final String TAG = "IOIOTree";
 
     private IOIOTreeService mBoundService;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the service object we can use to
+            // interact with the service.  Because we have bound to a explicit
+            // service that we know is running in our own process, we can
+            // cast its IBinder to a concrete class and directly access it.
+            mBoundService = ((IOIOTreeService.LocalBinder) service).getService();
+
+            Log.i(TAG, "local service connected");
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            // Because it is running in our same process, we should never
+            // see this happen.
+            mBoundService = null;
+            Log.i(TAG, "local service disconnected");
+        }
+    };
+    private Switch record;
+    private ToggleButton toggleButtons[] = new ToggleButton[7];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_my);
+
+        record = (Switch) findViewById(R.id.record);
+
+        toggleButtons[0] = (ToggleButton) findViewById(R.id.toggleButton1);
+        toggleButtons[1] = (ToggleButton) findViewById(R.id.toggleButton2);
+        toggleButtons[2] = (ToggleButton) findViewById(R.id.toggleButton3);
+        toggleButtons[3] = (ToggleButton) findViewById(R.id.toggleButton4);
+        toggleButtons[4] = (ToggleButton) findViewById(R.id.toggleButton5);
+        toggleButtons[5] = (ToggleButton) findViewById(R.id.toggleButton6);
+        toggleButtons[6] = (ToggleButton) findViewById(R.id.toggleButton7);
+
+        record.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Log.d(TAG, "isChecked=" + isChecked);
+                for (ToggleButton toggleButton : toggleButtons) {
+                    toggleButton.setEnabled(isChecked);
+                }
+            }
+        });
 
         startService(new Intent(this, IOIOTreeService.class));
     }
@@ -45,27 +90,5 @@ public class IOIOTreeActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            // This is called when the connection with the service has been
-            // established, giving us the service object we can use to
-            // interact with the service.  Because we have bound to a explicit
-            // service that we know is running in our own process, we can
-            // cast its IBinder to a concrete class and directly access it.
-            mBoundService = ((IOIOTreeService.LocalBinder) service).getService();
-
-            Log.i(TAG, "local service connected");
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            // This is called when the connection with the service has been
-            // unexpectedly disconnected -- that is, its process crashed.
-            // Because it is running in our same process, we should never
-            // see this happen.
-            mBoundService = null;
-            Log.i(TAG, "local service disconnected");
-        }
-    };
 
 }
