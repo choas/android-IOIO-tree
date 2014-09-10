@@ -3,7 +3,6 @@ package net.choas.android.ioiotree;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import ioio.lib.api.DigitalOutput;
@@ -62,12 +61,12 @@ public class IOIOTreeLooper implements IOIOLooper {
 
         }
         if (pos == 0) {
-            this.startTime = new Date().getTime();
+            this.startTime = System.currentTimeMillis();
         }
 
         IOIOTreeActivity.Recording recording = recordings.get(pos);
 
-        long time = new Date().getTime() - this.startTime;
+        long time = System.currentTimeMillis() - this.startTime;
         long timeNext = recording.getTime() - recordings.get(0).getTime();
 
         if (time < timeNext)
