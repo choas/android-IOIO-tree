@@ -18,7 +18,6 @@ public class IOIOTreeLooper implements IOIOLooper {
 
     private static final String TAG = "IOIOTreeLooper";
 
-
     DigitalOutput leds[] = new DigitalOutput[7];
     private boolean v = false;
     private List<IOIOTreeActivity.Recording> recordings;
@@ -42,8 +41,9 @@ public class IOIOTreeLooper implements IOIOLooper {
 
     @Override
     public void loop() throws ConnectionLostException, InterruptedException {
+
         if (this.nextRecordings != null) {
-            this.recordings = new ArrayList<IOIOTreeActivity.Recording>();
+            this.recordings  = new ArrayList<IOIOTreeActivity.Recording>();
             for(IOIOTreeActivity.Recording r : this.nextRecordings) {
                 this.recordings.add(r);
             }
@@ -57,8 +57,6 @@ public class IOIOTreeLooper implements IOIOLooper {
             return;
         }
 
-//        for (IOIOTreeActivity.Recording recording : recordings) {
-
         if (pos >= recordings.size()) {
             pos = 0;
 
@@ -66,7 +64,6 @@ public class IOIOTreeLooper implements IOIOLooper {
         if (pos == 0) {
             this.startTime = new Date().getTime();
         }
-
 
         IOIOTreeActivity.Recording recording = recordings.get(pos);
 
@@ -78,16 +75,9 @@ public class IOIOTreeLooper implements IOIOLooper {
             return;
         }
 
-
         leds[recording.getButtonNumber()].write(recording.isState());
 
         pos++;
-
-
-
-//        }
-
-
     }
 
     @Override
@@ -103,8 +93,7 @@ public class IOIOTreeLooper implements IOIOLooper {
     public void setRecording(List<IOIOTreeActivity.Recording> recordings) {
 
         Log.d(TAG, "recording " + recordings.size());
-//        this.running = !recordings.isEmpty();
-//        this.clean = recordings.isEmpty();
+
         this.pos = 0;
         this.nextRecordings = recordings;
     }

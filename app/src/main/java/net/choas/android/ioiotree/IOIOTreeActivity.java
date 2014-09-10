@@ -71,7 +71,6 @@ public class IOIOTreeActivity extends Activity {
 
         record.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Log.d(TAG, "isChecked=" + isChecked);
                 for (ToggleButton toggleButton : toggleButtons) {
                     toggleButton.setEnabled(isChecked);
                     toggleButton.setChecked(false);
@@ -85,7 +84,6 @@ public class IOIOTreeActivity extends Activity {
                 if(isChecked) {
                     Log.d(TAG, "clean recording");
                     recording.clear();
-//                   recording = null; //new ArrayList<Recording>();
                 }
 
                 mBoundService.setRecording(recording);
