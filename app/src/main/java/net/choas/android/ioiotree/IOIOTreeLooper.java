@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import ioio.lib.api.AnalogInput;
 import ioio.lib.api.DigitalOutput;
 import ioio.lib.api.IOIO;
 import ioio.lib.api.exception.ConnectionLostException;
@@ -24,6 +25,8 @@ public class IOIOTreeLooper implements IOIOLooper {
     private int pos = 0;
     private long startTime;
     private List<IOIOTreeActivity.Recording> nextRecordings;
+    private AnalogInput photoresistor;
+    private long ct = System.currentTimeMillis();
 
     @Override
     public void setup(IOIO ioio) throws ConnectionLostException, InterruptedException {
@@ -36,21 +39,33 @@ public class IOIOTreeLooper implements IOIOLooper {
         leds[4] = ioio.openDigitalOutput(3);
         leds[5] = ioio.openDigitalOutput(4);
         leds[6] = ioio.openDigitalOutput(5);
+
+        photoresistor = ioio.openAnalogInput(44);
     }
 
     @Override
     public void loop() throws ConnectionLostException, InterruptedException {
 
+        float voltage = photoresistor.getVoltage();
+        if (System.currentTimeMillis() > ct + 2000) {
+            Log.d(TAG, "photoresistor voltage: " + voltage);
+            ct = System.currentTimeMillis();
+        }
+
+        if (voltage > 1.5) {
+            return;
+        }
+
         if (this.nextRecordings != null) {
-            this.recordings  = new ArrayList<IOIOTreeActivity.Recording>();
-            for(IOIOTreeActivity.Recording r : this.nextRecordings) {
+            this.recordings = new ArrayList<IOIOTreeActivity.Recording>();
+            for (IOIOTreeActivity.Recording r : this.nextRecordings) {
                 this.recordings.add(r);
             }
             this.pos = 0;
             this.nextRecordings = null;
         }
         if (this.recordings == null || this.recordings.isEmpty()) {
-            for(DigitalOutput led : leds) {
+            for (DigitalOutput led : leds) {
                 led.write(false);
             }
             return;
@@ -69,8 +84,7 @@ public class IOIOTreeLooper implements IOIOLooper {
         long time = System.currentTimeMillis() - this.startTime;
         long timeNext = recording.getTime() - recordings.get(0).getTime();
 
-        if (time < timeNext)
-        {
+        if (time < timeNext) {
             return;
         }
 
