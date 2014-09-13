@@ -38,6 +38,8 @@ public class TreeActivity extends Activity {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
+
+
         }
     }
 
@@ -55,6 +57,16 @@ public class TreeActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+
+//            if (savedInstanceState == null) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.container, new SettingsFragment())
+                        .commit();
+
+
+//            }
+
+
             return true;
         }
         return super.onOptionsItemSelected(item);
