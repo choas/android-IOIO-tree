@@ -20,11 +20,11 @@ public class IOIOTreeLooper implements IOIOLooper {
 
     DigitalOutput leds[] = new DigitalOutput[7];
     private boolean v = false;
-    private List<IOIOTreeActivity.Recording> recordings;
+    private List<Recording> recordings;
 
     private int pos = 0;
     private long startTime;
-    private List<IOIOTreeActivity.Recording> nextRecordings;
+    private List<Recording> nextRecordings;
     private AnalogInput photoresistor;
     private long ct = System.currentTimeMillis();
 
@@ -57,8 +57,8 @@ public class IOIOTreeLooper implements IOIOLooper {
         }
 
         if (this.nextRecordings != null) {
-            this.recordings = new ArrayList<IOIOTreeActivity.Recording>();
-            for (IOIOTreeActivity.Recording r : this.nextRecordings) {
+            this.recordings = new ArrayList<Recording>();
+            for (Recording r : this.nextRecordings) {
                 this.recordings.add(r);
             }
             this.pos = 0;
@@ -79,7 +79,7 @@ public class IOIOTreeLooper implements IOIOLooper {
             this.startTime = System.currentTimeMillis();
         }
 
-        IOIOTreeActivity.Recording recording = recordings.get(pos);
+        Recording recording = recordings.get(pos);
 
         long time = System.currentTimeMillis() - this.startTime;
         long timeNext = recording.getTime() - recordings.get(0).getTime();
@@ -103,7 +103,7 @@ public class IOIOTreeLooper implements IOIOLooper {
         Log.d(TAG, "incompatible");
     }
 
-    public void setRecording(List<IOIOTreeActivity.Recording> recordings) {
+    public void setRecording(List<Recording> recordings) {
 
         Log.d(TAG, "recording " + recordings.size());
 

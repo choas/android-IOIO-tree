@@ -30,7 +30,7 @@ public class IOIOTreeService extends IOIOService {
         return mBinder;
     }
 
-    public void setRecording(List<IOIOTreeActivity.Recording> recordings) {
+    public void setRecording(List<Recording> recordings) {
         looper.setRecording(recordings);
     }
 

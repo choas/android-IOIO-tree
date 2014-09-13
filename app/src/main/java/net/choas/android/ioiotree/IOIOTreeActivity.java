@@ -157,28 +157,4 @@ for (ToggleButton toggleButton : toggleButtons) {
         }
     }
 
-    public class Recording {
-
-        private int buttonNumber;
-        private boolean state;
-        private long time;
-
-        private Recording(int buttonNumber, boolean state) {
-            this.buttonNumber = buttonNumber;
-            this.state = state;
-            this.time = System.currentTimeMillis();
-        }
-
-        public int getButtonNumber() {
-            return buttonNumber;
-        }
-
-        public boolean isState() {
-            return state;
-        }
-
-        public long getTime() {
-            return time;
-        }
-    }
 }
