@@ -58,13 +58,20 @@ public class TreeActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
 
-//            if (savedInstanceState == null) {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.container, new SettingsFragment())
-                        .commit();
+            Intent intent = new Intent(this, SettingsActivity.class);
+//            EditText editText = (EditText) findViewById(R.id.edit_message);
+//            String message = editText.getText().toString();
+//            intent.putExtra(EXTRA_MESSAGE, message);
+            startActivity(intent);
 
-
-//            }
+//
+////            if (savedInstanceState == null) {
+//                getFragmentManager().beginTransaction()
+//                        .replace(R.id.container, new SettingsFragment())
+//                        .commit();
+//
+//
+////            }
 
 
             return true;
