@@ -125,13 +125,7 @@ public class TreeActivity extends Activity {
                         Log.d(TAG, "clean recording");
                         recording.clear();
                     }
-
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-
-
-//                    ;
-
-                    mBoundService.setRecording(recording, sharedPref.getString("pref_lightIntensity", "?"));
+                    mBoundService.setRecording(recording);
                 }
             });
 

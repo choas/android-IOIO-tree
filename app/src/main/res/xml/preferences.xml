@@ -2,13 +2,12 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
+    <CheckBoxPreference
         android:key="pref_lightIntensity"
         android:title="@string/pref_lightIntensity"
         android:summary="@string/pref_lightIntensity_summary"
         android:dialogTitle="@string/pref_lightIntensity"
-        android:entries="@array/pref_lightIntensity_entries"
-        android:entryValues="@array/pref_lightIntensity_values"
-        android:defaultValue="250" />
+        android:defaultValue="false"
+    />
 
 </PreferenceScreen>

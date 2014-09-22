@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="pref_lightIntensity_entries">
+
+<!--
+    <string-array name="QQQpref_lightIntensity_entries">
         <item>dark</item>
         <item>dim</item>
         <item>light</item>
         <item>OFF</item>
     </string-array>
-    <string-array name="pref_lightIntensity_values">
+    <string-array name="QQQpref_lightIntensity_values">
 
         <item>60</item>
         <item>120</item>
@@ -14,5 +16,6 @@
         <item>1000</item>
     </string-array>
 
+-->
 
 </resources>

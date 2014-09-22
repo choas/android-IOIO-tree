@@ -1,5 +1,7 @@
 package net.choas.android.ioiotree;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class IOIOTreeLooper implements IOIOLooper {
     private List<Recording> nextRecordings;
     private AnalogInput photoresistor;
     private long ct = System.currentTimeMillis();
-    private Integer lightIntensity = 0;
+    private Boolean lightIntensity = false;
 
     @Override
     public void setup(IOIO ioio) throws ConnectionLostException, InterruptedException {
@@ -47,15 +49,23 @@ public class IOIOTreeLooper implements IOIOLooper {
     @Override
     public void loop() throws ConnectionLostException, InterruptedException {
 
-        float voltage = photoresistor.getVoltage();
-        if (System.currentTimeMillis() > ct + 2000) {
-            Log.d(TAG, "photoresistor voltage: " + voltage);
-            ct = System.currentTimeMillis();
-        }
+        if (this.lightIntensity) {
+            float voltage = photoresistor.getVoltage();
+            int numLeds = (int)((voltage / 2.5) * 7.0) + 1;
 
-        if ((int)(voltage * 100) > this.lightIntensity) {
+            if (System.currentTimeMillis() > ct + 2000) {
+                Log.d(TAG, "photoresistor voltage: " + voltage + " num:" + numLeds);
+                ct = System.currentTimeMillis();
+            }
+
+            int i = 1;
             for (DigitalOutput led : leds) {
-                led.write(false);
+                if (i <= numLeds) {
+                    led.write(true);
+                } else {
+                    led.write(false);
+                }
+                i++;
             }
             return;
         }
@@ -107,12 +117,15 @@ public class IOIOTreeLooper implements IOIOLooper {
         Log.d(TAG, "incompatible");
     }
 
-    public void setRecording(List<Recording> recordings, String lightIntensity) {
+    public void setRecording(List<Recording> recordings) {
 
         Log.d(TAG, "recording " + recordings.size());
 
         this.pos = 0;
         this.nextRecordings = recordings;
-        this.lightIntensity = Integer.valueOf(lightIntensity);
+    }
+
+    public void setLightIntensity(Boolean lightIntensity) {
+        this.lightIntensity = lightIntensity;
     }
 }
