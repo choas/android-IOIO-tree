@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TreeActivity extends Activity {
+public class IOIOTreeActivity extends Activity {
 
     private static final String TAG = "IOIOActivity";
 
