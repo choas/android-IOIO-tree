@@ -1,7 +1,5 @@
 package net.choas.android.ioiotree;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -50,23 +48,7 @@ public class IOIOTreeLooper implements IOIOLooper {
     public void loop() throws ConnectionLostException, InterruptedException {
 
         if (this.lightIntensity) {
-            float voltage = photoresistor.getVoltage();
-            int numLeds = (int)((voltage / 2.5) * 7.0) + 1;
-
-            if (System.currentTimeMillis() > ct + 2000) {
-                Log.d(TAG, "photoresistor voltage: " + voltage + " num:" + numLeds);
-                ct = System.currentTimeMillis();
-            }
-
-            int i = 1;
-            for (DigitalOutput led : leds) {
-                if (i <= numLeds) {
-                    led.write(true);
-                } else {
-                    led.write(false);
-                }
-                i++;
-            }
+            lightIntensity();
             return;
         }
 
@@ -85,11 +67,11 @@ public class IOIOTreeLooper implements IOIOLooper {
             return;
         }
 
-        if (pos >= recordings.size()) {
-            pos = 0;
-
+        if (this.pos >= recordings.size()) {
+            this.pos = 0;
         }
-        if (pos == 0) {
+
+        if (this.pos == 0) {
             this.startTime = System.currentTimeMillis();
         }
 
@@ -105,6 +87,26 @@ public class IOIOTreeLooper implements IOIOLooper {
         leds[recording.getButtonNumber()].write(recording.isState());
 
         pos++;
+    }
+
+    private void lightIntensity() throws InterruptedException, ConnectionLostException {
+        float voltage = photoresistor.getVoltage();
+        int maxIntensity = (int)((voltage / 2.5) * leds.length) + 1;
+
+        if (System.currentTimeMillis() > ct + 2000) {
+            Log.d(TAG, "photoresistor voltage: " + voltage + " num:" + maxIntensity);
+            ct = System.currentTimeMillis();
+        }
+
+        int intensity = 1;
+        for (DigitalOutput led : leds) {
+            if (intensity <= maxIntensity) {
+                led.write(true);
+            } else {
+                led.write(false);
+            }
+            intensity++;
+        }
     }
 
     @Override
