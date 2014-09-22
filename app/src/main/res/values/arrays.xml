@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="pref_lightIntensity_entries">
-        <item>OFF</item>
         <item>dark</item>
-
+        <item>dim</item>
+        <item>light</item>
+        <item>OFF</item>
     </string-array>
     <string-array name="pref_lightIntensity_values">
 
-        <item>0</item>
-        <item>1</item>
-
+        <item>60</item>
+        <item>120</item>
+        <item>250</item>
+        <item>1000</item>
     </string-array>
 
 

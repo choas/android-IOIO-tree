@@ -27,6 +27,7 @@ public class IOIOTreeLooper implements IOIOLooper {
     private List<Recording> nextRecordings;
     private AnalogInput photoresistor;
     private long ct = System.currentTimeMillis();
+    private Integer lightIntensity = 0;
 
     @Override
     public void setup(IOIO ioio) throws ConnectionLostException, InterruptedException {
@@ -52,7 +53,10 @@ public class IOIOTreeLooper implements IOIOLooper {
             ct = System.currentTimeMillis();
         }
 
-        if (voltage > 1.5) {
+        if ((int)(voltage * 100) > this.lightIntensity) {
+            for (DigitalOutput led : leds) {
+                led.write(false);
+            }
             return;
         }
 
@@ -103,11 +107,12 @@ public class IOIOTreeLooper implements IOIOLooper {
         Log.d(TAG, "incompatible");
     }
 
-    public void setRecording(List<Recording> recordings) {
+    public void setRecording(List<Recording> recordings, String lightIntensity) {
 
         Log.d(TAG, "recording " + recordings.size());
 
         this.pos = 0;
         this.nextRecordings = recordings;
+        this.lightIntensity = Integer.valueOf(lightIntensity);
     }
 }

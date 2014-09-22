@@ -9,5 +9,6 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="pref_lightIntensity">light intensity</string>
     <string name="pref_lightIntensity_default">1</string>
+    <string name="pref_lightIntensity_summary">Selected light intensity to turn off lightning.</string>
 
 </resources>
