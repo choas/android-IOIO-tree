@@ -1,6 +1,11 @@
+IOIO Tree
+=========
+
+slides: http://www.slideshare.net/LarsGregori/connecting-electronic-to-an-android
 
 
 
+about remote debugging
 
 - Connect device via USB and make sure debugging is working.
 - adb tcpip 5555
